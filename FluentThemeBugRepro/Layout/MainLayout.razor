@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+@inject IDialogService DialogService
+
+<main>
+    <FluentDesignTheme StorageName="theme"></FluentDesignTheme>
+    <FluentLayout>
+        <FluentHeader>
+            <span>Bug Repro</span>
+            <FluentSpacer/>
+            <FluentButton BackgroundColor="var(--accent-fill-rest)" IconEnd="@(new Icons.Filled.Size20.Settings().WithColor(Color.Fill))" Title="Open page settings" OnClick="@OpenPageSettingsPanel"></FluentButton>
+        </FluentHeader>
+        @Body
+    </FluentLayout>
+    <FluentDialogProvider/>
+</main>
+
+@code
+{
+    private async void OpenPageSettingsPanel()
+    {
+        await DialogService.ShowPanelAsync<PageAppearancePanel>(
+            new DialogParameters
+            {
+                Alignment = HorizontalAlignment.Right,
+                Title = "Page settings",
+                PrimaryAction = "Ok",
+                SecondaryAction = null,
+            });
+    }
+}

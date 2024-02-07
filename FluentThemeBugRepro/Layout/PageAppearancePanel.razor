@@ -1,0 +1,29 @@
+﻿@implements IDialogContentComponent
+
+<FluentDesignTheme StorageName="theme" @bind-Mode="@_mode" @bind-OfficeColor="@_color"/>
+<FluentSelect Label="Theme" Items="@(Enum.GetValues<DesignThemeModes>())" @bind-SelectedOption="@_mode"></FluentSelect>
+<div style="height: 20px"></div>
+<FluentSelect Label="Color"
+              Items="@(Enum.GetValues<OfficeColor>().Select(i => (OfficeColor?)i))"
+              @bind-SelectedOption="@_color">
+    <OptionTemplate>
+        <FluentStack>
+            <FluentIcon Value="@(new Icons.Filled.Size20.RectangleLandscape())"
+                        Color="Color.Custom"
+                        CustomColor="@(context.ToAttributeValue() != "default" ? context.ToAttributeValue() : "#036ac4")"/>
+            <FluentLabel>@context</FluentLabel>
+        </FluentStack>
+    </OptionTemplate>
+</FluentSelect>
+
+@code
+{
+    private DesignThemeModes _mode;
+
+    private OfficeColor? _color;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+    }
+}
